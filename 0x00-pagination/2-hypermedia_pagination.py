@@ -76,11 +76,11 @@ class Server:
 
         data_dict = {
             "page": page,
-            "page_size": page_size,
+            "page_size": page_size if page_size > page else 0,
             "data": pages,
             "total_pages": math.ceil(len(self.dataset()) / page_size),
             "prev_page": page - 1 if page > 1 else None,
-            "next_page": page + 1 if page < len(self.dataset()) else None,
+            "next_page": page + 1 if page < page_size else None,
         }
 
         return data_dict
