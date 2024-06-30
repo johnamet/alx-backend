@@ -4,7 +4,7 @@ The module contains
 """
 from typing import Any
 
-BaseCache = __import__('base_caching').BaseCache
+BaseCache = __import__('base_caching').BaseCaching
 
 
 class FIFOCache(BaseCache):
