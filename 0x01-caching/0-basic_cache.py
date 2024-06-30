@@ -19,7 +19,7 @@ class BasicCache(BaseCache):
         :param value: the value to store
         """
 
-        if key:
+        if key and value:
             self.cache_data[key] = value
 
     def get(self, key: str) -> None:
