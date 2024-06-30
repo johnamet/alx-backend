@@ -22,12 +22,12 @@ class FIFOCache(BaseCache):
         """
 
         if key and item:
-            if len(self.cache_data) >= BaseCache.MAX_ITEMS:
+            if len(self.queue) >= BaseCache.MAX_ITEMS:
                 discarded = self.queue.pop(0)
-                self.cache_data.remove(discarded)
+                del self.cache_data[discarded]
                 print('DISCARD:', discarded)
             self.cache_data[key] = item
-            self.queue.append(item)
+            self.queue.append(key)
 
     def get(self, key: str) -> Any:
         """Get an item by key"""
