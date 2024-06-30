@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-The module contains LIFO Cache class.
+The module contains LRUCache class.
 """
 from typing import Any
 
@@ -27,7 +27,7 @@ class LRUCache(BaseCache):
             if len(self.queue) >= self.MAX_ITEMS:
                 discarded = self.queue.pop(0)
                 del self.cache_data[discarded]
-                print("DISCARD: ", discarded)
+                print("DISCARD:", discarded)
             self.cache_data[key] = item
             self.queue.append(key)
 
