@@ -3,7 +3,8 @@ from flask import Flask, render_template
 from flask_babel import Babel, _
 
 """
-The module contains a flask application factory, as explained here:
+The module contains a flask application factory,
+as explained here:
 http://flask.pocoo.org/docs/patterns/appfactories/
 
 """
@@ -30,9 +31,7 @@ def index() -> str:
     The home page
     :return:
     """
-    return render_template('1-index.html',
-                           home_title=_("Welcome to Holberton"), home_header=_("Hello world"), )
-
+    return render_template('0-index.html')
 
 if __name__ == '__main__':
     app.run()
