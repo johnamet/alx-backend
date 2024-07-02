@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template
 from flask_babel import Babel, _
+"""
+The module contains a flask application factory, as explained here:
+http://flask.pocoo.org/docs/patterns/appfactories/
 
+"""
 
 class Config:
     LANGUAGES = ["en", "fr"]
@@ -15,9 +19,13 @@ babel = Babel(app)
 
 
 @app.route('/')
-def index():
+def index() -> str:
+    """
+    The home page
+    :return:
+    """
     return render_template('1-index.html',
-                           home_title=_("Welcome to Holberton"), home_header=_("Hello world"),)
+                           home_title=_("Welcome to Holberton"), home_header=_("Hello world"), )
 
 
 if __name__ == '__main__':

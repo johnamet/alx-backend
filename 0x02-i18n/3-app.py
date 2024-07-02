@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+The module contains the flask app
+"""
 from flask import Flask, render_template, request
 from flask_babel import Babel, _
 
@@ -15,12 +18,18 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+def get_locale() -> str:
+    return (request
+            .accept_languages
+            .best_match(app.config['LANGUAGES']))
 
 
 @app.route('/')
-def index():
+def index() -> str:
+    """
+    The entry point
+    :return:
+    """
     return render_template('3-index.html',
                            home_title=_('Welcome to Holberton'),
                            home_header=_('Hello world'))

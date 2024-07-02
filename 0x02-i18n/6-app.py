@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
-from flask import Flask, render_template, request, g
-from flask_babel import Babel, _
+"""
+The flask app
+"""
+from typing import Any
+
 import pytz
+from flask import Flask, render_template, request, g
+from flask_babel import Babel
+from pytz import _UTCclass
 from pytz.exceptions import UnknownTimeZoneError
+from pytz.tzinfo import StaticTzInfo, DstTzInfo
 
 
 class Config:
@@ -24,6 +31,10 @@ users = {
 
 
 def get_user():
+    """
+    The user function
+    :return:
+    """
     user_id = request.args.get('login_as')
     if user_id:
         return users.get(int(user_id))
@@ -32,11 +43,19 @@ def get_user():
 
 @app.before_request
 def before_request():
+    """
+    before a request is made
+    :return:
+    """
     g.user = get_user()
 
 
 @babel.localeselector
 def get_locale():
+    """
+    The locale
+    :return:
+    """
     locale = request.args.get('locale')
     if locale in app.config['LANGUAGES']:
         return locale
@@ -46,7 +65,11 @@ def get_locale():
 
 
 @babel.timezoneselector
-def get_timezone():
+def get_timezone() -> _UTCclass | StaticTzInfo | DstTzInfo | Any:
+    """
+    get the time zone
+    :return:
+    """
     try:
         timezone = request.args.get('timezone')
         if timezone:
@@ -59,7 +82,11 @@ def get_timezone():
 
 
 @app.route('/')
-def index():
+def index() -> str:
+    """
+    the entry point
+    :return:
+    """
     return render_template('6-index.html')
 
 

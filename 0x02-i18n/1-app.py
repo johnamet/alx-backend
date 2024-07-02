@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+The module contains a flask application factory, as explained here:
+http://flask.pocoo.org/docs/patterns/appfactories/
+
+"""
 from flask import Flask, render_template
 from flask_babel import Babel
 
@@ -15,8 +20,13 @@ babel = Babel(app)
 
 
 @app.route('/')
-def index():
+def index() -> str:
+    """
+    Entry point
+    :return:
+    """
     return render_template('1-index.html')
+
 
 if __name__ == '__main__':
     app.run()

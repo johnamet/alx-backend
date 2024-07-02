@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
+"""
+The flask app
+"""
 from flask import Flask, render_template, request, g
-from flask_babel import Babel, _
+from flask_babel import Babel
 
 
 class Config:
@@ -30,21 +33,35 @@ def get_user():
 
 @app.before_request
 def before_request():
+    """
+    Before a request is made
+    :return:
+    """
     g.user = get_user()
 
 
 @babel.localeselector
 def get_locale():
+    """
+    The babel locale selector
+    :return:
+    """
     locale = request.args.get('locale')
     if locale in app.config['LANGUAGES']:
         return locale
-    if g.user and g.user.get('locale') in app.config['LANGUAGES']:
+    if g.user and g.user.get('locale') \
+            in app.config['LANGUAGES']:
         return g.user.get('locale')
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return (request.accept_languages
+            .best_match(app.config['LANGUAGES']))
 
 
 @app.route('/')
-def index():
+def index() -> str:
+    """
+    The entry point
+    :return:
+    """
     return render_template('5-index.html')
 
 

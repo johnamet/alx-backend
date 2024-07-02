@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
-from flask import Flask, render_template, request, g
-from flask_babel import Babel, _
 import pytz
+from flask import Flask, render_template, request, g
+from flask_babel import Babel
 from pytz.exceptions import UnknownTimeZoneError
+
 
 class Config:
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -20,15 +22,18 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
+
 def get_user():
     user_id = request.args.get('login_as')
     if user_id:
         return users.get(int(user_id))
     return None
 
+
 @app.before_request
 def before_request():
     g.user = get_user()
+
 
 @babel.localeselector
 def get_locale():
@@ -38,6 +43,7 @@ def get_locale():
     if g.user and g.user.get('locale') in app.config['LANGUAGES']:
         return g.user.get('locale')
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+
 
 @babel.timezoneselector
 def get_timezone():
@@ -54,9 +60,11 @@ def get_timezone():
             pass
     return app.config['BABEL_DEFAULT_TIMEZONE']
 
+
 @app.route('/')
 def index():
     return render_template('7-index.html')
+
 
 if __name__ == '__main__':
     app.run()
